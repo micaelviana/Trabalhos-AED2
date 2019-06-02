@@ -8,7 +8,7 @@ struct arvore_busca_intervalo{
 
 typedef struct arvore_busca_intervalo arvIntervalo;
 
-arvIntervalo* arvIntervaloInicializa(arvIntervalo * raiz);
+arvIntervalo* arvIntervaloInicializa();
 arvIntervalo* arvIntervaloInsere(arvIntervalo *raiz, float preco);
 void arvIntervaloCaminha(arvIntervalo* raiz);
 int arvIntervaloBuscaMaiorQue(arvIntervalo* raiz, float preco);

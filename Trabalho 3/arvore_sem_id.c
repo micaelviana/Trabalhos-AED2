@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include "arvore_sem_id.h"
 
-arvIntervalo *arvIntervaloInicializa(arvIntervalo *raiz){
+arvIntervalo *arvIntervaloInicializa(){
     return NULL;
 }
 
 arvIntervalo *arvIntervaloInsere(arvIntervalo *raiz, float preco){
     if (raiz == NULL){
-        raiz = (arvIntervalo *)malloc(sizeof(arvIntervalo));
+        raiz = (arvIntervalo*) malloc(sizeof(arvIntervalo));
         raiz->preco = preco;
         raiz->esq = raiz->dir = NULL;
     }
     else if (preco < raiz->preco){
         raiz->esq = arvIntervaloInsere(raiz->esq, preco);
     }
-    else if (preco > raiz->preco){
+    else{
         raiz->dir = arvIntervaloInsere(raiz->dir, preco);
     }
     return raiz;
