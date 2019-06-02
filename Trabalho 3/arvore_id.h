@@ -7,10 +7,10 @@ struct arvore_id{
     struct arvore_id* dir;
 };
 
-typedef struct arvore_id arvoreId;
+typedef struct arvore_id arvId;
 
-arvoreId* arvoreIdInicializa();
-arvoreId* arvoreIdInsere(arvoreId *raiz, int indice, int deslocamento);
-void arvoreIdCaminha(arvoreId *raiz);
-int arvoreIdBusca(arvoreId* raiz, int indice);
-arvoreId* arvoreIdLibera(arvoreId* raiz);
+arvId* arvIdInicializa();
+arvId* arvIdInsere(arvId *raiz, int indice, int deslocamento);
+void arvIdCaminha(arvId *raiz);
+int arvIdBusca(arvId* raiz, int indice);
+arvId* arvIdLibera(arvId* raiz);

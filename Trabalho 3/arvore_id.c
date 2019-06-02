@@ -2,48 +2,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-arvoreId* arvoreIdInicializa(){
+arvId* arvIdInicializa(){
     return NULL;
 }
 
-arvoreId* arvoreIdInsere(arvoreId* raiz, int indice, int deslocamento){
+arvId* arvIdInsere(arvId* raiz, int indice, int deslocamento){
     if(raiz == NULL){
-        raiz = (arvoreId*) malloc(sizeof(arvoreId));
+        raiz = (arvId*) malloc(sizeof(arvId));
         raiz->indice = indice;
         raiz->deslocamento = deslocamento;
         raiz->esq = raiz->dir = NULL;
     }
     else if(indice < raiz->indice){
-        raiz->esq = arvoreIdInsere(raiz->esq,indice,deslocamento);
+        raiz->esq = arvIdInsere(raiz->esq,indice,deslocamento);
     }
     else if (indice > raiz->indice){
-        raiz->dir = arvoreIdInsere(raiz->dir, indice, deslocamento);
+        raiz->dir = arvIdInsere(raiz->dir, indice, deslocamento);
     }
     return raiz;
 }
 
-void arvoreIdCaminha(arvoreId *raiz){
+void arvIdCaminha(arvId *raiz){
     if(raiz){
-        arvoreIdCaminha(raiz->esq);
+        arvIdCaminha(raiz->esq);
         printf("%d ",raiz->indice);
-        arvoreIdCaminha(raiz->dir);
+        arvIdCaminha(raiz->dir);
     }
 }
 
-int arvoreIdBusca(arvoreId* raiz, int indice){
+int arvIdBusca(arvId* raiz, int indice){
     if(raiz == NULL)
         return -1;
     else if(indice < raiz->indice)
-        return arvoreIdBusca(raiz->esq, indice);
+        return arvIdBusca(raiz->esq, indice);
     else if(indice > raiz->indice)
-        return arvoreIdBusca(raiz->dir, indice);
+        return arvIdBusca(raiz->dir, indice);
     return raiz->deslocamento;
 }
 
-arvoreId* arvoreIdLibera(arvoreId* raiz){
+arvId* arvIdLibera(arvId* raiz){
     if(raiz){
-        arvoreIdLibera(raiz->esq);
-        arvoreIdLibera(raiz->dir);
+        arvIdLibera(raiz->esq);
+        arvIdLibera(raiz->dir);
         free(raiz);
     }
     return NULL;
