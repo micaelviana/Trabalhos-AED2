@@ -2,7 +2,7 @@
 #include "arquivo.h"
  
 void produtoEstoqueImprime(produtoEstoque produto){
-    printf("Identificador :%d, Nome: %s, Descricao: %s, Preco, %.2f\n",produto.id,produto.nome,produto.descricao,produto.preco);
+    printf("Identificador :%d\nNome: %s\nDescricao: %s\nPreco, %.2f\n",produto.id,produto.nome,produto.descricao,produto.preco);
 }
 
 int produtoEstoqueBusca(FILE* arq, int indice){
@@ -23,13 +23,39 @@ int produtoEstoqueBusca(FILE* arq, int indice){
     return -1;
 }
 
-int produtoEstoqueMaiorQue(FILE *arq, int preco){
+int produtoEstoqueBuscaMaiorQue(FILE *arq, float preco){
     long int posicaoOriginal = ftell(arq);
     int resultado = 0;
     produtoEstoque aux;
 
     while (fread(&aux, sizeof(produtoEstoque), 1, arq) != 0){
         if(aux.preco > preco)
+            resultado++;
+    }
+    fseek(arq, posicaoOriginal, SEEK_SET);
+    return resultado;
+}
+
+int produtoEstoqueBuscaMenorQue(FILE *arq, float preco){
+    long int posicaoOriginal = ftell(arq);
+    int resultado = 0;
+    produtoEstoque aux;
+
+    while (fread(&aux, sizeof(produtoEstoque), 1, arq) != 0){
+        if (aux.preco < preco)
+            resultado++;
+    }
+    fseek(arq, posicaoOriginal, SEEK_SET);
+    return resultado;
+}
+
+int produtoEstoqueBuscaIntervalo(FILE *arq, float inicio, float fim){
+    long int posicaoOriginal = ftell(arq);
+    int resultado = 0;
+    produtoEstoque aux;
+
+    while (fread(&aux, sizeof(produtoEstoque), 1, arq) != 0){
+        if ( (aux.preco > inicio) && (aux.preco < fim) )
             resultado++;
     }
     fseek(arq, posicaoOriginal, SEEK_SET);
