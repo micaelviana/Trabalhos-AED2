@@ -7,7 +7,8 @@
 #define TESTE 30
 
 int main(){
-    FILE *arq = fopen("base", "r");
+    FILE *arq = fopen("base", "w+");
+    FILE *arqTexto = fopen("out", "r");
     produtoEstoque produto;
     long int deslocamento;
     int i;
@@ -16,13 +17,14 @@ int main(){
     float chaveReal1, chaveReal2;
     double soma1, soma2, soma3, soma4, soma5, soma6;
 
-    /*Criacao da arvore de indices*/
-    arvId* arvore = arvIdInicializa();
-    for (i = 0; i < __QUANT__PRODUTOS; i++){
+    /*Criacao do arquivo binario a partir do arquivo texto e indexacao da arvore*/
+    arvId *arvore = arvIdInicializa();
+    while (fscanf(arqTexto, "%d %*[:] %[^:] %*[:] %[^:] %*[:] %f", &produto.id, produto.nome, produto.descricao, &produto.preco) != EOF){
         deslocamento = ftell(arq);
-        fread(&produto, sizeof(produtoEstoque), 1, arq);
+        fwrite(&produto, sizeof(produtoEstoque), 1, arq);
         arvore = arvIdInsere(arvore, produto.id, deslocamento);
     }
+    fclose(arqTexto);
 
     //-----------------------PRIMEIRA QUESTAO----------------------
 
