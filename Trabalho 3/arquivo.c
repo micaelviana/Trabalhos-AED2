@@ -5,10 +5,14 @@ void produtoEstoqueImprime(produtoEstoque produto){
     printf("Identificador :%d\nNome: %s\nDescricao: %s\nPreco, %.2f\n",produto.id,produto.nome,produto.descricao,produto.preco);
 }
 
-int produtoEstoqueBusca(FILE* arq, int indice){
+bool validaDeslocamento(long deslocamento){
+    return (deslocamento != -1);
+}
 
-    long int posicaoOriginal = ftell(arq);
-    long int deslocamento;
+long produtoEstoqueBusca(FILE* arq, int indice){
+
+    long posicaoOriginal = ftell(arq);
+    long deslocamento;
     produtoEstoque aux;
 
     deslocamento = ftell(arq);
@@ -24,7 +28,7 @@ int produtoEstoqueBusca(FILE* arq, int indice){
 }
 
 int produtoEstoqueBuscaMaiorQue(FILE *arq, float preco){
-    long int posicaoOriginal = ftell(arq);
+    long posicaoOriginal = ftell(arq);
     int resultado = 0;
     produtoEstoque aux;
 
@@ -37,7 +41,7 @@ int produtoEstoqueBuscaMaiorQue(FILE *arq, float preco){
 }
 
 int produtoEstoqueBuscaMenorQue(FILE *arq, float preco){
-    long int posicaoOriginal = ftell(arq);
+    long posicaoOriginal = ftell(arq);
     int resultado = 0;
     produtoEstoque aux;
 
@@ -50,7 +54,7 @@ int produtoEstoqueBuscaMenorQue(FILE *arq, float preco){
 }
 
 int produtoEstoqueBuscaIntervalo(FILE *arq, float inicio, float fim){
-    long int posicaoOriginal = ftell(arq);
+    long posicaoOriginal = ftell(arq);
     int resultado = 0;
     produtoEstoque aux;
 
