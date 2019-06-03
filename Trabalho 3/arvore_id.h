@@ -12,5 +12,5 @@ typedef struct arvore_id arvId;
 arvId* arvIdInicializa();
 arvId* arvIdInsere(arvId *raiz, int indice, int deslocamento);
 void arvIdCaminha(arvId *raiz);
-int arvIdBusca(arvId* raiz, int indice);
+long arvIdBusca(arvId* raiz, int indice);
 arvId* arvIdLibera(arvId* raiz);

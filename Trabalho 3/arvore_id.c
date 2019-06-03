@@ -30,7 +30,7 @@ void arvIdCaminha(arvId *raiz){
     }
 }
 
-int arvIdBusca(arvId* raiz, int indice){
+long arvIdBusca(arvId* raiz, int indice){
     if(raiz == NULL)
         return -1;
     else if(indice < raiz->indice)
