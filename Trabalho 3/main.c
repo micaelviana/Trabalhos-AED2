@@ -10,19 +10,21 @@ int main(){
     FILE *arq = fopen("base", "w+");
     FILE *arqTexto = fopen("out", "r");
     produtoEstoque produto;
-    long int deslocamento;
+    long deslocamento;
     int i;
     clock_t ini, fim;
     int chaveInteira;
     float chaveReal1, chaveReal2;
     double soma1, soma2, soma3, soma4, soma5, soma6;
 
-    /*Criacao do arquivo binario a partir do arquivo texto e indexacao da arvore*/
+    /*Criacao do arquivo binario a partir do arquivo texto e indexacao das arvores*/
     arvId *arvore = arvIdInicializa();
+    arvIntervalo *arvoreEspaco = arvIntervaloInicializa();
     while (fscanf(arqTexto, "%d %*[:] %[^:] %*[:] %[^:] %*[:] %f", &produto.id, produto.nome, produto.descricao, &produto.preco) != EOF){
         deslocamento = ftell(arq);
         fwrite(&produto, sizeof(produtoEstoque), 1, arq);
         arvore = arvIdInsere(arvore, produto.id, deslocamento);
+        arvoreEspaco = arvIntervaloInsere(arvoreEspaco, produto.preco);
     }
     fclose(arqTexto);
 
@@ -52,17 +54,7 @@ int main(){
 
     //-----------------------SEGUNDA QUESTAO----------------------//
 
-    /*Criacao da arvore de intervalos*/
-    fseek(arq, 0, SEEK_SET);
-    arvIntervalo* arvoreEspaco = arvIntervaloInicializa();
-    for (i = 0; i < __QUANT__PRODUTOS; i++){
-        deslocamento = ftell(arq);
-        fread(&produto, sizeof(produtoEstoque), 1, arq);
-        arvoreEspaco = arvIntervaloInsere(arvoreEspaco, produto.preco);
-    }
-
     fseek(arq,0,SEEK_SET);
-
     soma1 = soma2 = soma3 = soma4 = soma5 = soma6 = 0;
     for (i = 0; i < TESTE; i++){
         chaveReal1 = (rand()/ __INTERVALO__PRECOS) + 1.0f;
