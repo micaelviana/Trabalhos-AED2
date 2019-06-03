@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "arquivo.h"
  
 void produtoEstoqueImprime(produtoEstoque produto){
