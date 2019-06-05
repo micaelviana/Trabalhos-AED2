@@ -60,8 +60,8 @@ int main(){
     fseek(arq,0,SEEK_SET);
     soma1 = soma2 = soma3 = soma4 = soma5 = soma6 = 0;
     for (i = 0; i < TESTE; i++){
-        chaveReal1 = (rand()/ __INTERVALO__PRECOS) + 1.0f;
-        chaveReal2 = (rand() / __INTERVALO__PRECOS) + 1.0f;
+        chaveReal1 = (rand()/ __INTERVALO__REAL) + 1.0f;
+        chaveReal2 = (rand() / __INTERVALO__REAL) + 1.0f;
 
         /*Busca de maiores que*/
         
@@ -107,6 +107,8 @@ int main(){
         fim = clock();
         soma6 += (double)(fim - ini) / CLOCKS_PER_SEC;
     }
+
+    fclose(arq);
 
     printf("-----------------------SEGUNDA QUESTAO----------------------\n");
 
