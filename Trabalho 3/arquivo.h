@@ -5,6 +5,8 @@
 #define __QUANT__PRODUTOS 10000
 #define __INTERVALO__IDS 40009
 #define __INTERVALO__PRECOS 100000000.0f
+#define __NAO__ENCONTRADO -1
+size_t __retorno__fread;
 
 struct tipoProduto{
     int id;

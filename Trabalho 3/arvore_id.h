@@ -1,10 +1,11 @@
+#include "arquivo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #pragma once
 
 struct arvore_id{
     int indice;
-    int deslocamento;
+    long deslocamento;
     struct arvore_id* esq;
     struct arvore_id* dir;
 };
@@ -12,7 +13,7 @@ struct arvore_id{
 typedef struct arvore_id arvId;
 
 arvId* arvIdInicializa();
-arvId* arvIdInsere(arvId *raiz, int indice, int deslocamento);
+arvId* arvIdInsere(arvId *raiz, int indice, long deslocamento);
 void arvIdCaminha(arvId *raiz);
-long arvIdBusca(arvId* raiz, int indice);
+long arvIdBusca(FILE* arq,arvId* raiz, int indice);
 arvId* arvIdLibera(arvId* raiz);

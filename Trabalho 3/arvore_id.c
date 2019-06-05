@@ -4,7 +4,7 @@ arvId* arvIdInicializa(){
     return NULL;
 }
 
-arvId* arvIdInsere(arvId* raiz, int indice, int deslocamento){
+arvId* arvIdInsere(arvId* raiz, int indice, long deslocamento){
     if(raiz == NULL){
         raiz = (arvId*) malloc(sizeof(arvId));
         raiz->indice = indice;
@@ -28,13 +28,17 @@ void arvIdCaminha(arvId *raiz){
     }
 }
 
-long arvIdBusca(arvId* raiz, int indice){
+long arvIdBusca(FILE *arq, arvId *raiz, int indice){
     if(raiz == NULL)
-        return -1;
+        return __NAO__ENCONTRADO;
     else if(indice < raiz->indice)
-        return arvIdBusca(raiz->esq, indice);
+        return arvIdBusca(arq,raiz->esq, indice);
     else if(indice > raiz->indice)
-        return arvIdBusca(raiz->dir, indice);
+        return arvIdBusca(arq,raiz->dir, indice);
+    
+    produtoEstoque aux;
+    fseek(arq,raiz->deslocamento,SEEK_SET);
+    __retorno__fread = fread(&aux, sizeof(produtoEstoque), 1, arq);
     return raiz->deslocamento;
 }
 

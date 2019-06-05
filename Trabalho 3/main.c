@@ -24,7 +24,7 @@ int main(){
         deslocamento = ftell(arq);
         fwrite(&produto, sizeof(produtoEstoque), 1, arq);
         arvore = arvIdInsere(arvore, produto.id, deslocamento);
-        arvoreEspaco = arvIntervaloInsere(arvoreEspaco, produto.preco);
+        arvoreEspaco = arvIntervaloInsere(arvoreEspaco, produto.preco,deslocamento);
     }
     fclose(arqTexto);
 
@@ -35,13 +35,15 @@ int main(){
     for (i = 0; i < TESTE; i++){
         chaveInteira = (rand() % __INTERVALO__IDS) + 1;
 
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
         produtoEstoqueBusca(arq, chaveInteira);
         fim = clock();
         soma1 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIdBusca(arvore, chaveInteira);
+        arvIdBusca(arq,arvore, chaveInteira);
         fim = clock();
         soma2 += (double)(fim - ini) / CLOCKS_PER_SEC;
     }
@@ -49,8 +51,9 @@ int main(){
     printf("-----------------------PRIMEIRA QUESTAO----------------------\n");
     printf("===============================================================\n");
     printf("Média Busca Sequencial no Arquivo\tMédia Busca Binária no Arquivo\n");
-    printf("      %lf\t\t\t             %lf\n", soma1 / TESTE, soma2 / TESTE);
+    printf("      %.7lf\t\t\t             %.7lf\n", soma1 / TESTE, soma2 / TESTE);
     printf("===============================================================\n\n\n\n");
+
 
     //-----------------------SEGUNDA QUESTAO----------------------//
 
@@ -61,35 +64,46 @@ int main(){
         chaveReal2 = (rand() / __INTERVALO__PRECOS) + 1.0f;
 
         /*Busca de maiores que*/
+        
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
         produtoEstoqueBuscaMaiorQue(arq,chaveReal1);
         fim = clock();
         soma1 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
+        // printf("Posicao antes da arvore do arquivo %ld\n",ftell(arq));
+
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIntervaloBuscaMaiorQue(arvoreEspaco, chaveReal1);
+        arvIntervaloBuscaMaiorQue(arq,arvoreEspaco, chaveReal1);
         fim = clock();
         soma2 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
         /*Busca de menores que*/
+
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
         produtoEstoqueBuscaMenorQue(arq, chaveReal1);
         fim = clock();
         soma3 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIntervaloBuscaMenorQue(arvoreEspaco, chaveReal1);
+        arvIntervaloBuscaMenorQue(arq, arvoreEspaco, chaveReal1);
         fim = clock();
         soma4 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
-        /*Busca por intervalos*/
+        // /*Busca por intervalos*/
+
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
         produtoEstoqueBuscaIntervalo(arq, chaveReal1, chaveReal2);
         fim = clock();
         soma5 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
+        fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIntervaloBuscaIntervalo(arvoreEspaco, chaveReal1, chaveReal2);
+        arvIntervaloBuscaIntervalo(arq, arvoreEspaco, chaveReal1, chaveReal2);
         fim = clock();
         soma6 += (double)(fim - ini) / CLOCKS_PER_SEC;
     }
