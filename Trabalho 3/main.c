@@ -61,8 +61,6 @@ int main(){
         tabelaHashBuscarAcessar(arq,chaveInteira,tabela,pos);
         fim = clock();
         soma3 += (double)(fim - ini) / CLOCKS_PER_SEC;
-
-        printf("\n\n");
     }
 
     printf("-----------------------PRIMEIRA QUESTAO----------------------\n");
