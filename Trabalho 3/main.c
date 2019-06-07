@@ -10,7 +10,7 @@ int main(){
     FILE *arq = fopen("base", "w+");
     FILE *arqTexto = fopen("out", "r");
     produtoEstoque produto;
-    long deslocamento;
+    long deslocamento, retornoImpressao;
     int i;
     clock_t ini, fim;
     int chaveInteira;
@@ -37,15 +37,19 @@ int main(){
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        produtoEstoqueBusca(arq, chaveInteira);
+        retornoImpressao = produtoEstoqueBusca(arq, chaveInteira);
         fim = clock();
+        printf("Arquivo,deslocamento encontrado = %ld\n", retornoImpressao);
         soma1 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIdBusca(arq,arvore, chaveInteira);
+        retornoImpressao = arvIdBusca(arq, arvore, chaveInteira);
         fim = clock();
+        printf("Arvore, deslocamento encontrado = %ld\n", retornoImpressao);
         soma2 += (double)(fim - ini) / CLOCKS_PER_SEC;
+
+        printf("\n\n");
     }
 
     printf("-----------------------PRIMEIRA QUESTAO----------------------\n");
@@ -67,45 +71,53 @@ int main(){
         
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        produtoEstoqueBuscaMaiorQue(arq,chaveReal1);
+        retornoImpressao = produtoEstoqueBuscaMaiorQue(arq, chaveReal1);
         fim = clock();
+        printf("Arquivo, quant de maiores = %ld\n", retornoImpressao);
         soma1 += (double)(fim - ini) / CLOCKS_PER_SEC;
-
-        // printf("Posicao antes da arvore do arquivo %ld\n",ftell(arq));
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIntervaloBuscaMaiorQue(arq,arvoreEspaco, chaveReal1);
+        retornoImpressao = arvIntervaloBuscaMaiorQue(arq, arvoreEspaco, chaveReal1);
         fim = clock();
+        printf("Arvore, quant de maiores = %ld\n", retornoImpressao);
         soma2 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
+        printf("\n\n");
         /*Busca de menores que*/
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        produtoEstoqueBuscaMenorQue(arq, chaveReal1);
+        retornoImpressao = produtoEstoqueBuscaMenorQue(arq, chaveReal1);
         fim = clock();
+        printf("Arquivo, quant de menores = %ld\n", retornoImpressao);
         soma3 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIntervaloBuscaMenorQue(arq, arvoreEspaco, chaveReal1);
+        retornoImpressao = arvIntervaloBuscaMenorQue(arq, arvoreEspaco, chaveReal1);
         fim = clock();
+        printf("Arvore, quant de menores = %ld\n", retornoImpressao);
         soma4 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
+        printf("\n\n");
         // /*Busca por intervalos*/
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        produtoEstoqueBuscaIntervalo(arq, chaveReal1, chaveReal2);
+        retornoImpressao = produtoEstoqueBuscaIntervalo(arq, chaveReal1, chaveReal2);
         fim = clock();
+        printf("Arquivo, tam do intervalo = %ld\n", retornoImpressao);
         soma5 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
         fseek(arq, 0, SEEK_SET);
         ini = clock();
-        arvIntervaloBuscaIntervalo(arq, arvoreEspaco, chaveReal1, chaveReal2);
+        retornoImpressao = arvIntervaloBuscaIntervalo(arq, arvoreEspaco, chaveReal1, chaveReal2);
         fim = clock();
+        printf("Arvore, tamanho do intervalo = %ld\n", retornoImpressao);
         soma6 += (double)(fim - ini) / CLOCKS_PER_SEC;
+
+        printf("\n\n");
     }
 
     fclose(arq);
@@ -122,10 +134,3 @@ int main(){
     printf("Média Busca de intervalo no Arquivo\tMédia Busca de intervalo na Arvore\n");
     printf("      %.7lf\t\t\t             %.7lf\n", soma5 / TESTE, soma6 / TESTE);
 }
-
-/*
-fseek(arq,resultadoBusca,SEEK_SET);
-    fread(&produto, sizeof(produtoEstoque), 1, arq);
-
-    produtoEstoqueImprime(produto);
-*/
