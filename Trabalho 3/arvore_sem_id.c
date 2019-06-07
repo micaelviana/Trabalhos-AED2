@@ -74,8 +74,7 @@ int arvIntervaloBuscaMenorQue(FILE* arq, arvIntervalo *raiz, float preco){
     return resultadoEsq + resultadoDir + resultadoNo;
 }
 
-int arvIntervaloBuscaIntervalo(FILE* arq , arvIntervalo *raiz, float inicio, float fim)
-{
+int arvIntervaloBuscaIntervalo(FILE* arq , arvIntervalo *raiz, float inicio, float fim){
     int resultadoEsq = 0, resultadoDir = 0, resultadoNo = 0;
     if (raiz == NULL)
         return 0;
@@ -84,8 +83,7 @@ int arvIntervaloBuscaIntervalo(FILE* arq , arvIntervalo *raiz, float inicio, flo
         resultadoDir = arvIntervaloBuscaIntervalo(arq,raiz->dir, inicio, fim);
     else if (raiz->preco >= fim)
         resultadoEsq = arvIntervaloBuscaIntervalo(arq,raiz->esq, inicio, fim);
-    else
-    {
+    else{
         resultadoEsq = arvIntervaloBuscaIntervalo(arq,raiz->esq, inicio, fim);
         resultadoDir = arvIntervaloBuscaIntervalo(arq,raiz->dir, inicio, fim);
     }
