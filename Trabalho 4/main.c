@@ -25,6 +25,7 @@ int main(){
     double soma1,soma2;
     tipoGrafo* g;
     clock_t ini,fim;
+    float graus[4] = {25,50,75,100};
 
     srand(time(NULL));
 
@@ -36,9 +37,7 @@ int main(){
 
     for(i = 0; i < 10; i++){
         tamGrafo = 4 + (rand()%7);
-        nconexoes = 25 + (rand()%76);
-        maximo = tamGrafo*(tamGrafo-1)/2;
-        minimo = tamGrafo-1;
+        nconexoes = graus[i%4];
 
         printf("Grafo %d, Numero de vertices: %d, Numero de arestas: %.0f,Grau de Conectividade sorteado: %d%%\n",i+1,tamGrafo,numeroArestas(tamGrafo,nconexoes),nconexoes);
         g = criaGrafo(tamGrafo,nconexoes);
@@ -57,10 +56,8 @@ int main(){
     soma1 = soma2 = 0;
     for(i = 0; i < TESTE; i++){
         tamGrafo = 300 + (rand()%201);
-        nconexoes = 25 + (rand() % 76);
+        nconexoes = graus[i % 4];
         raiz = rand()%tamGrafo;
-        maximo = tamGrafo*(tamGrafo-1)/2;
-        minimo = tamGrafo-1;
 
         g = criaGrafo(tamGrafo, nconexoes);
 
@@ -127,14 +124,11 @@ int main(){
 
 
     for (i = 0; i < TESTE; i++){
-        tamGrafo = 10 + (rand()%41);
+        tamGrafo = 300 + (rand() % 201);
         if(i%2 == 0)
-            nconexoes = 25 + (rand()%51);
+            nconexoes = graus[i % 4];
         else
-            nconexoes = 1;
-
-        maximo = tamGrafo*(tamGrafo-1)/2;
-        minimo = tamGrafo-1;
+            nconexoes = 0;
 
         g = criaGrafo(tamGrafo,nconexoes);
 

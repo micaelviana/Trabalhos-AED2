@@ -237,7 +237,7 @@ float numeroArestas(int ordem, float grau){
     int minimo = ordem-1;
     int maximo = ordem*(ordem-1)/2;
 
-    int grauMinimo = minimo*100.0/maximo;
+    int grauMinimo = minimo*100.0/maximo*100.0;
 
     if(grau < grauMinimo)
         return minimo;
