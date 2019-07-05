@@ -19,7 +19,7 @@ char* imprimeResultadoCiclo(bool n){
 int main(){
     int i;
     int raiz;
-    int tamGrafo,nconexoes,maximo,minimo;
+    int tamGrafo,percentualConexoes,maximo,minimo;
     int* resultadosBFS;
     int* resultadosDFS;
     double soma1,soma2;
@@ -37,10 +37,10 @@ int main(){
 
     for(i = 0; i < 10; i++){
         tamGrafo = 4 + (rand()%7);
-        nconexoes = graus[i%4];
+        percentualConexoes = graus[i%4];
 
-        printf("Grafo %d, Numero de vertices: %d, Numero de arestas: %.0f,Grau de Conectividade sorteado: %d%%\n",i+1,tamGrafo,numeroArestas(tamGrafo,nconexoes),nconexoes);
-        g = criaGrafo(tamGrafo,nconexoes);
+        printf("Grafo %d, Numero de vertices: %d, Numero de arestas: %.0f,Grau de Conectividade sorteado: %d%%\n",i+1,tamGrafo,numeroArestas(tamGrafo,percentualConexoes),percentualConexoes);
+        g = criaGrafo(tamGrafo,percentualConexoes);
         imprimeGrafo(g);
         g = apagaGrafo(g);
     }
@@ -56,12 +56,12 @@ int main(){
     soma1 = soma2 = 0;
     for(i = 0; i < TESTE; i++){
         tamGrafo = 300 + (rand()%201);
-        nconexoes = graus[i % 4];
+        percentualConexoes = graus[i % 4];
         raiz = rand()%tamGrafo;
 
-        g = criaGrafo(tamGrafo, nconexoes);
+        g = criaGrafo(tamGrafo, percentualConexoes);
 
-        printf("Grafo: %d, Numero de vertices: %d, Numero de arestas: %.0f, Grau de conectividade sorteado: %d%%\n", i + 1, tamGrafo, numeroArestas(tamGrafo, nconexoes),nconexoes);
+        printf("Grafo: %d, Numero de vertices: %d, Numero de arestas: %.0f, Grau de conectividade sorteado: %d%%\n", i + 1, tamGrafo, numeroArestas(tamGrafo, percentualConexoes),percentualConexoes);
         printf("Raiz sorteada para a BFS: %d\n",raiz);
 
         ini = clock();
@@ -102,8 +102,8 @@ int main(){
     printf("Raiz escolhida: 0\n\n");
 
     tamGrafo = 6;
-    nconexoes = 75;
-    g = criaGrafo(tamGrafo,nconexoes);
+    percentualConexoes = 75;
+    g = criaGrafo(tamGrafo,percentualConexoes);
     imprimeGrafo(g);
     printf("\n");
     todosCaminhos(g,0);
@@ -122,17 +122,16 @@ int main(){
 
     /*O grafo de conexao minima com certeza nao tem ciclo, entao ao passar um valor pequeno de conexao a saida esperada eh que nao tem ciclo, nos demais casos varia */
 
-
     for (i = 0; i < TESTE; i++){
         tamGrafo = 300 + (rand() % 201);
         if(i%2 == 0)
-            nconexoes = graus[i % 4];
+            percentualConexoes = 100;
         else
-            nconexoes = 0;
+            percentualConexoes = 0;
 
-        g = criaGrafo(tamGrafo,nconexoes);
+        g = criaGrafo(tamGrafo,percentualConexoes);
 
-        printf("Grafo %d, Numero de vertices %d, Numero de arestas: %.0f, Grau de Conectividade sorteado: %d%%\n", i + 1, tamGrafo, numeroArestas(tamGrafo, nconexoes),nconexoes);
+        printf("Grafo %d, Numero de vertices %d, Numero de arestas: %.0f, Grau de Conectividade sorteado: %d%%\n", i + 1, tamGrafo, numeroArestas(tamGrafo, percentualConexoes),percentualConexoes);
 
         printf("Tem ciclo: %s\n",imprimeResultadoCiclo(temCiclo(g)));
 

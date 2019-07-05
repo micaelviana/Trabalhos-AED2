@@ -120,25 +120,6 @@ int* bfs(tipoGrafo* g, int raiz){
     return distancia;
 }
 
-// void imprimeDistancia(int *v, int ordem){
-//     int d, j;
-//     bool validade = true;
-//     while (d < ordem && validade == true){
-//         validade = false;
-//         for (j = 0; j < ordem; j++){
-//             if (v[j] == d){
-//                 if (validade == false){
-//                     printf("Distancia %d: ", d);
-//                 }
-//                 printf("%d ", j);
-//                 validade = true;
-//             }
-//         }
-//         printf("\n\n");
-//         d++;
-//     }
-// }
-
 void imprimeDistancia(int* v, int ordem){
 
     /*Achar ate onde tem distancia*/
@@ -179,7 +160,7 @@ int* dfs(tipoGrafo *g){
 
     /*A estrategia que faz com que o grafo seja conexo garante que a partir da raiz 0
     todos os vertices sejam visitados, entao nao precisa de um for na DFS nesse trabalho, o que melhora um pouco o tempo */
-    pai[0] = BRANCO;
+    pai[0] = 0;
     dfsVisita(g,cor,0,resultadosDFS,0);
 
     return resultadosDFS;
@@ -234,10 +215,10 @@ void visitaCaminhos(tipoGrafo *g, char *cor, int *caminho, int vertice, int tamS
 }
 
 float numeroArestas(int ordem, float grau){
-    int minimo = ordem-1;
-    int maximo = ordem*(ordem-1)/2;
+    int minimo = ordem-1;//412
+    int maximo = ordem*(ordem-1)/2;//85078
 
-    int grauMinimo = minimo*100.0/maximo*100.0;
+    int grauMinimo = minimo*100.0/maximo;
 
     if(grau < grauMinimo)
         return minimo;
