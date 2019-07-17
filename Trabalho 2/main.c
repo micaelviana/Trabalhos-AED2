@@ -3,97 +3,175 @@
 #include <time.h>
 #include "vetor.h"
 #include "arvore.h"
+#include "avl_tree.h"
 #define TESTE 30
-// #include "avl.h"
+#define ITERACOES 10
 
 int main(){
+    printf("verificando se deu bom -3 \n");
     double soma1,soma2;
     clock_t ini,fim;
     int i,j;
-    int *aux = array(MAX_SIZE_CAMINHAMENTO);
-    arv* arvore = criaArvore();
+    int chave;
+    int scan;
+
+    int *aux = array(__MAX__SIZE__TRAVERSALS);
+    binaryTree* arvore = initialize();
 
 
     //-----------------------PRIMEIRA QUESTAO----------------------
 
     /*Eu preciso gerar 50 elementos aleatorios e distintos para arvore
-    *O jeito de fazer isso eh somar o elemento rancomico atual com o anterior
+    *O jeito de fazer isso eh somar o elemento randomico atual com o anterior,
     *so que isso gera um vetor ordenado. Entao a solucao gera um vetor ordenado pra ter certeza dos 50 elementos distintos, embaralha ele e joga pra arvore*/
-    array__fill__ordered(aux,MAX_SIZE_CAMINHAMENTO);
-    embaralha(aux, MAX_SIZE_CAMINHAMENTO);
-    arvore = vetorParaArvore(arvore,aux,MAX_SIZE_CAMINHAMENTO);
 
-    // printf("Caminhamento Pré-fixado\n");
-    // caminhaPrefix(arvore);
-    // printf("\n\n");
+    printf("=======================PRIMEIRA QUESTAO=======================================\n");
+    arrayFillOrdered(aux,__MAX__SIZE__TRAVERSALS);
+    shuffle(aux, __MAX__SIZE__TRAVERSALS);
+    arvore = arrayToTree(arvore,aux,__MAX__SIZE__TRAVERSALS);
 
-    // printf("Caminhamento Central\n");
-    // caminhaInfix(arvore);
-    // printf("\n\n");
+    printf("Caminhamento Pré-fixado\n");
+    preOrder(arvore);
+    printf("\n\n");
 
-    // printf("Caminhamento Pós-fixado\n");
-    // caminhaPosfix(arvore);
-    // printf("\n\n");
+    printf("Caminhamento Central\n");
+    inOrder(arvore);
+    printf("\n\n");
+
+    printf("Caminhamento Pós-fixado\n");
+    postOrder(arvore);
+    printf("\n\n");
+    printf("\n\n\n\n");
 
     //-------------------SEGUNDA QUESTAO-------------------------
-
-    arvore = liberaArvore(arvore);
-    arvore = criaArvore();
-    aux = realocaVetor(aux, MAX_SIZE_PACOTES);//vou reaproveita-lo
+    printf("=======================SEGUNDA QUESTAO=======================================\n");
+    arvore = freeTree(arvore);
+    aux = reallocArray(aux, __MAX__SIZE__PACKS);//vou reaproveita-lo
 
 
     /*Gerar mais ou menos 200 elementos com algumas repeticoes*/
-    array__fill__random(aux,MAX_SIZE_PACOTES);
+    arrayFillRandom(aux,__MAX__SIZE__PACKS);
 
     /*A funcao meio ordenado eh um Quick que tem uma decisao
-    *No lugar de if(ini < fim) eu coloco (fim-ini > 5) isso deixa algumas partes baguncadas. O numero foi so uma escolha, quanto maior ele maior a bagunca*/
-    meioOrdenado(aux,MAX_SIZE_PACOTES);
+    *No lugar de if(ini < fim) eu coloco (fim-ini > __RANDOM_FACTOR) isso deixa algumas partes baguncadas. O numero foi so uma escolha, quanto maior ele maior a bagunca*/
+    
+    meioOrdenado(aux,__MAX__SIZE__PACKS);
 
-    // printf("Valores que entram na arvore:\n");
-    // array__print(aux,MAX_SIZE_PACOTES);
-    // printf("\n\n\n");
+    printf("Valores que entram na arvore:\n");
+    arrayPrint(aux,__MAX__SIZE__PACKS);
+    printf("\n\n\n");
 
-    arvore = vetorParaArvore(arvore,aux, MAX_SIZE_PACOTES);
-    // printf("Pacotes montados na ordem correta: \n");
-    // caminhaInfix(arvore);
-    // printf("\n\n\n");
+    arvore = arrayToTree(arvore,aux, __MAX__SIZE__PACKS);
+    printf("Pacotes montados na ordem correta: \n");
+    inOrder(arvore);
+    printf("\n\n\n");
+    printf("\n\n\n\n");
 
     //-------------------TERCEIRA QUESTAO-------------------------
-
-    /*Essa parte de liberar e criar de novo nem precisava, porque ja ta apontando pra
-    NULL, so que fica mais bonito*/
-    arvore = liberaArvore(arvore);
-    arvore = criaArvore();
+    printf("=======================TERCEIRA QUESTAO=======================================\n");
+    arvore = freeTree(arvore);
 
     //vou reutilizar ele agora pra 1m de elmentos
-    aux = realocaVetor(aux,__MAXSIZE);
+    aux = reallocArray(aux,__MAXSIZE);
     int* copia = array(__MAXSIZE);
 
 
-    array__fill__ordered(aux,__MAXSIZE);
-    copiaVetor(copia,aux,__MAXSIZE);
-    embaralha(copia,__MAXSIZE);
-    arvore = vetorParaArvore(arvore, copia, __MAXSIZE);
-    free__array(copia);
+    arrayFillOrdered(aux,__MAXSIZE);
+    copyArray(copia,aux,__MAXSIZE);
+    shuffle(copia,__MAXSIZE); 
+    arvore = arrayToTree(arvore, copia, __MAXSIZE);
+    freeArray(copia);
 
     srand(time(NULL));
     soma1 = soma2 = 0;
     for (i = 0; i < TESTE; i++){
-        int chave = (rand() % (__MAXSIZE) << 2) + 1;
+        chave = (rand() % (__MAXSIZE) << 2) + 1;
 
         ini = clock();
-        buscaArvore(arvore, chave);
+        treeSearch(arvore, chave);
         fim = clock();
         soma1 += (double)(fim - ini) / CLOCKS_PER_SEC;
 
         ini = clock();
-        binary__search(aux, __MAXSIZE, chave);
+        binarySearch(aux, __MAXSIZE, chave);
+        fim = clock();
+        soma2 += (double)(fim - ini) / CLOCKS_PER_SEC;
+    }
+    freeArray(aux);
+
+    printf("===============================================================\n");
+    printf("Média Busca Binária na Arvore\t\tMédia Busca Binária no Vetor\n");
+    printf("      %.10lf\t\t\t       %.10lf\n", soma1 / TESTE, soma2 / TESTE);
+    printf("===============================================================\n\n");
+    printf("\n\n\n\n");
+
+    //-------------------QUARTA QUESTAO-------------------------
+    printf("=======================QUARTA QUESTAO=======================================\n");
+    int* v = array(__MAXSIZE);
+
+    avl_tree* avl;
+    make__avl__tree(&avl);
+    arvore = freeTree(arvore);
+
+    soma1 = soma2 = 0;
+    printf("TEMPO DE CRIAÇÃO E ALTURA\n");
+    for(i = 0; i < ITERACOES; i++){
+        arrayFillOrdered(v,__MAXSIZE);
+        shuffle(v,__MAXSIZE);
+
+        printf("Iteracao %d\n",i+1);
+
+        ini = clock();
+        arvore = arrayToTree(arvore,v,__MAXSIZE);
+        fim = clock();
+        printf("Tempo de criação da árvore binária de busca: %lf",(double)(fim - ini) / CLOCKS_PER_SEC);
+        printf("\n");
+        printf("Altura da árvore binária: %d",treeHeight(arvore));
+        printf("\n\n");
+
+        ini = clock();
+        avl = array__to__avl__tree(avl,v,__MAXSIZE);
+        fim = clock();
+        printf("Tempo de criação da árvore avl: %lf", (double)(fim - ini) / CLOCKS_PER_SEC);
+        printf("\n");
+        printf("Altura da árvore avl: %d", avl__tree__height(avl));
+        printf("\n\n");
+        
+        arvore = freeTree(arvore);
+        avl = avl__tree__erase(avl);
+    }
+    printf("\n\n\n");
+
+
+    printf("TEMPO DE BUSCA NAS ARVORES\n");
+    int *copia2 = array(__MAXSIZE);
+
+    arrayFillOrdered(v, __MAXSIZE);
+    copyArray(copia2, v, __MAXSIZE);
+    shuffle(copia2, __MAXSIZE);
+    arvore = arrayToTree(arvore, copia2, __MAXSIZE);
+    avl = array__to__avl__tree(avl,copia2,__MAXSIZE);
+    freeArray(copia2);
+    freeArray(v);
+
+    soma1 = soma2 = 0;
+    for (i = 0; i < TESTE; i++){
+        chave = (rand() % (__MAXSIZE) << 2) + 1;
+
+        ini = clock();
+        treeSearch(arvore, chave);
+        fim = clock();
+        soma1 += (double)(fim - ini) / CLOCKS_PER_SEC;
+
+        ini = clock();
+        avl__tree__search(avl,chave);
         fim = clock();
         soma2 += (double)(fim - ini) / CLOCKS_PER_SEC;
     }
 
-    // printf("===============================================================\n");
-    // printf("Média Busca Binária na Arvore\t\tMédia Busca Binária no Vetor\n");
-    // printf("      %lf\t\t\t       %lf\n", soma1 / 30, soma2 / 30);
-    // printf("===============================================================\n\n");
+    printf("===============================================================\n");
+    printf("Média Busca Binária na Arvore\t\tMédia Busca Binária na Arvore AVL\n");
+    printf("      %.10lf\t\t\t       %.10lf\n", soma1 / TESTE, soma2 / TESTE);
+    printf("===============================================================\n\n");
+    printf("\n\n\n\n");
 }
