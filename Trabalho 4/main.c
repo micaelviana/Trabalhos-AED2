@@ -16,6 +16,7 @@ char* imprimeResultadoCiclo(bool n){
     return "Nao";
 }
 
+
 int main(){
     int i;
     int raiz;
@@ -33,7 +34,7 @@ int main(){
 
     printf("-----------------------PRIMEIRA QUESTAO----------------------\n");
     printf("===============================================================\n");
-    printf("Criacao de grafos com diferentes tamanhos e graus de conectividade\n\n");
+    printf("Criacao de grafos com diferentes tamanhos e graus de conectividade\n\n"); 
 
     for(i = 0; i < 10; i++){
         tamGrafo = 4 + (rand()%7);
